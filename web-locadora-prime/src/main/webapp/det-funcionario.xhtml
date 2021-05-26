@@ -1,0 +1,163 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+
+		<title>Detalhe de Funcionário</title>
+
+		<h:form id="formDetFuncionario">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<div align="center">
+
+				<p:tabView id="tabFuncionario">
+
+					<p:tab id="cadDados" title="Dados do Funcionário">
+
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Nome:" />
+							<p:inputText disabled="true"
+								value="#{detFuncionarioBacking.nome}" size="60"
+								placeholder="Ex: Fulano de Tal" />
+
+							<p:outputLabel value="CPF:" />
+							<p:inputMask disabled="true" value="#{detFuncionarioBacking.cpf}"
+								size="20" placeholder="Ex: 123.123.123-12" mask="999.999.999-99" />
+
+							<p:outputLabel value="RG:" />
+							<p:inputMask disabled="true" value="#{detFuncionarioBacking.rg}"
+								size="20" placeholder="Ex: 12.123.123-X" mask="99.999.999-*" />
+
+							<p:outputLabel value="Data Nasc:" />
+							<p:calendar disabled="true" id="button"
+								value="#{detFuncionarioBacking.dataNascimento}" showOn="button"
+								pattern="dd/MM/yyyy" placeholder="Ex: 01/01/2000" />
+
+							<p:outputLabel value="Idade:" />
+							<p:inputNumber disabled="true"
+								value="#{detFuncionarioBacking.idade}" placeholder="Ex: 35"
+								size="5" minValue="1" maxValue="150" decimalPlaces="0" />
+
+							<h:outputText value="Sexo:" />
+							<p:selectOneRadio disabled="true"
+								value="#{detFuncionarioBacking.sexo}">
+								<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+								<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+
+					</p:tab>
+
+					<p:tab id="cadEndereco" title="Dados de Endereço">
+
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Tipo:" />
+							<p:selectOneMenu disabled="true" size="30">
+								<f:selectItem
+									itemLabel="#{detFuncionarioBacking.tipoLogradouro}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Logradouro:" />
+							<p:inputText disabled="true"
+								value="#{detFuncionarioBacking.nomeEndereco}" size="40"
+								placeholder="Ex: 15 de Novembro" />
+
+							<p:outputLabel value="Numero:" />
+							<p:inputNumber disabled="true"
+								value="#{detFuncionarioBacking.numero}" placeholder="Ex: 123"
+								size="10" maxValue="99999" decimalPlaces="0" />
+
+							<p:outputLabel value="Complemento:" />
+							<p:inputText disabled="true"
+								value="#{detFuncionarioBacking.complemento}" size="20"
+								placeholder="Ex: Sala B" />
+
+							<p:outputLabel value="Bairro:" />
+							<p:inputText disabled="true"
+								value="#{detFuncionarioBacking.bairro}" size="40"
+								placeholder="Ex: Centro" />
+
+							<p:outputLabel value="Estado:" />
+							<p:selectOneMenu disabled="true" id="cbEstado" size="40">
+								<f:selectItem itemLabel="#{detFuncionarioBacking.estado}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Cidade:" />
+							<p:selectOneMenu disabled="true" id="cbCidade" size="40">
+								<f:selectItem itemLabel="#{detFuncionarioBacking.cidade}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="CEP:" />
+							<p:inputMask disabled="true" value="#{detFuncionarioBacking.cep}"
+								size="15" placeholder="Ex: 12345-123" mask="99999-999" />
+						</h:panelGrid>
+
+					</p:tab>
+
+					<p:tab id="cadContato" title="Dados de Contato">
+
+						<h:panelGrid columns="4">
+							<p:outputLabel value="Telefone:" />
+							<p:inputMask disabled="true"
+								value="#{detFuncionarioBacking.telefone}" size="20"
+								placeholder="Ex: (11) 1234-1234" mask="(99) 9999-9999" />
+
+							<p:outputLabel value="Celular:" />
+							<p:inputMask disabled="true"
+								value="#{detFuncionarioBacking.celular}" size="20"
+								placeholder="Ex: (11) 91234-1234" mask="(99) 99999-9999" />
+						</h:panelGrid>
+
+						<h:panelGrid columns="3">
+							<p:outputLabel value="E-mail:" />
+							<p:spacer height="10" />
+							<p:inputText disabled="true"
+								value="#{detFuncionarioBacking.email}" size="53"
+								placeholder="Ex: contato@foursys.com.br" />
+						</h:panelGrid>
+
+					</p:tab>
+
+					<p:tab id="cadAcesso" title="Dados de Acesso"
+						rendered="#{loginBacking.dev}">
+
+						<h:panelGrid columns="6" cellpadding="10">
+
+							<p:outputLabel value="Login:" />
+							<p:inputText disabled="true"
+								value="#{detFuncionarioBacking.login}" size="30" />
+
+							<p:outputLabel value="Senha:" />
+							<p:password id="feedback" disabled="true"
+								value="#{detFuncionarioBacking.senha}" size="20" feedback="true"
+								redisplay="true" />
+
+							<p:outputLabel value="Perfil de Acesso:" />
+							<p:selectOneMenu disabled="true" size="15">
+								<f:selectItem itemLabel="#{detFuncionarioBacking.perfilAcesso}" />
+							</p:selectOneMenu>
+
+						</h:panelGrid>
+					</p:tab>
+
+				</p:tabView>
+
+				<h:panelGrid columns="1">
+
+					<p:commandButton id="btnSair" value="Sair"
+						action="#{detFuncionarioBacking.sair}" update="@form"
+						style="width: 150px" />
+
+				</h:panelGrid>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Relatório de Faturamento</title>
+
+		<h:form>
+			<div align="center">
+
+
+
+				<p:growl id="growl" showDetail="true" life="4000" />
+
+				<p:outputLabel value="Ano: " />
+				<p:inputNumber value="#{relFaturamentoBacking.anoPesquisa}"
+					size="20" maxValue="2021" decimalPlaces="0" />
+				<p:commandButton id="btnPesquisa" value="Pesquisar"
+					action="#{relFaturamentoBacking.pesquisar()}" update="@form"
+					style="width: 150px" />
+				<p:chart id="grafico" type="line"
+					model="#{relFaturamentoBacking.lineModel}"
+					style="height: 400px; width: 980px" />
+
+
+
+				<h:panelGrid columns="6">
+
+					<p:outputLabel value="Janeiro " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorJaneiro}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Fevereiro " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorFevereiro}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Março " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorMarco}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Abril " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorAbril}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Maio " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorMaio}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Junho " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorJunho}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Julho " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorJulho}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Agosto " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorAgosto}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Setembro " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorSetembro}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Outubro " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorOutubro}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Novembro " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorNovembro}"
+						symbol="R$" symbolPosition="p" />
+
+					<p:outputLabel value="Dezembro " />
+					<p:inputNumber disabled="true" value="#{relFaturamentoBacking.valorDezembro}"
+						symbol="R$" symbolPosition="p" />
+
+				</h:panelGrid>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

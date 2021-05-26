@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- TOPO START -->
+	<div id="layout-topbar" style="width: 99.5%; height:70px; margin-top: 0; border-radius:10px">
+		<a href="index.xhtml"><h:graphicImage name="images/logo01.gif"
+				library="adamantium-layout" style="height:70px; width:10%; border-radius:10px" /></a>
+		<ul id="top-menu">
+			<li><a><i class="icon-user2"></i> <span><p:outputLabel
+							value="Seja bem vindo: #{loginBacking.funcionarioLogado.nome}" /> </span></a></li>
+			<li><a href="login.xhtml" class="menulink Animated05"><i class="icon-x"></i> <span><p:outputLabel
+							value="Sair do sistema" /></span></a></li>
+		</ul>
+	</div>
+	<!-- TOPO END -->
+
+</ui:composition>

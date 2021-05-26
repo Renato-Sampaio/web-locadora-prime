@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+
+		<title>Cadastro de Filme</title>
+
+		<h:form id="formCadFilme">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<p:tabView>
+
+				<p:tab id="cadFilme" title="Cadastro de Filme">
+
+					<p:panel id="pnFilme">
+
+						<p:panelGrid columns="2">
+
+							<p:outputLabel value="Estado:" />
+							<p:selectOneMenu filter="true" value="#{teste.estado}" size="40">
+								<f:selectItem itemValue="" itemLabel="- Selecione Estado -" />
+								<f:selectItems value="#{teste.listaEstados}" var="est"
+									itemLabel="#{est.nome}" itemValue="#{est.idEstado}"/>
+								<p:ajax event="change" update="cidadeCombo" listener="#{teste.carregarCidade}" />	
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Cidade:" />
+							<p:selectOneMenu id="cidadeCombo" filter="true" value="#{teste.cidade}" size="40">
+								<f:selectItem itemValue="" itemLabel="- Selecione Cidade -" />
+								<f:selectItems value="#{teste.listaCidades}" var="cid"
+									itemLabel="#{cid.nome}" itemValue="#{cid.idCidade}" />
+							</p:selectOneMenu>
+
+						</p:panelGrid>
+
+						<p:panelGrid columns="3">
+
+							<p:commandButton id="btnSalvar" value="Salvar"
+								action="#{teste.teste}" update="@form" />
+
+						</p:panelGrid>
+
+					</p:panel>
+
+					<p:blockUI block="pnFilme" trigger="btnSalvar" />
+
+				</p:tab>
+
+
+			</p:tabView>
+
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

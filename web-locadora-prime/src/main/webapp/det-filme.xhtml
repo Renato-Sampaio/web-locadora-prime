@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+
+		<title>Detalhe do Filme</title>
+
+		<h:form id="formDetFilme">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<div align="center">
+
+				<p:tabView>
+
+					<p:tab id="detFilme" title="Dados do Filme">
+
+						<h:panelGrid columns="2">
+
+							<p:outputLabel value="Nome:" />
+							<p:inputText disabled="true" value="#{detFilmeBacking.nome}"
+								size="45" maxlength="45" placeholder="Ex: A Era do Gelo" />
+
+							<p:outputLabel value="Valor:" />
+							<p:inputNumber disabled="true" value="#{detFilmeBacking.valor}"
+								placeholder="Ex: 10,00" symbol="R$" symbolPosition="p" />
+
+							<p:outputLabel value="Disponível:" />
+							<p:selectOneRadio disabled="true" id="disponivel"
+								value="#{detFilmeBacking.disponivel}">
+								<f:selectItem itemLabel="Sim" itemValue="Sim" />
+								<f:selectItem itemLabel="Não" itemValue="Não" />
+							</p:selectOneRadio>
+
+							<p:outputLabel value="Promoção:" />
+							<p:selectOneRadio disabled="true" id="promocao"
+								value="#{detFilmeBacking.promocao}">
+								<f:selectItem itemLabel="Sim" itemValue="Sim" />
+								<f:selectItem itemLabel="Não" itemValue="Não" />
+							</p:selectOneRadio>
+
+							<p:outputLabel value="Valor Promoção:" />
+							<p:inputNumber disabled="true"
+								value="#{detFilmeBacking.valorPromocao}" placeholder="Ex: 10,00"
+								symbol="R$" symbolPosition="p" />
+
+							<p:outputLabel value="Diretor:" />
+							<p:inputText disabled="true" value="#{detFilmeBacking.diretor}"
+								size="45" maxlength="45" placeholder="Ex: Staley Kubrik" />
+
+							<p:outputLabel value="Ano Lançamento:" />
+							<p:inputNumber disabled="true"
+								value="#{detFilmeBacking.anoLancamento}" placeholder="Ex: 1998"
+								size="10" maxValue="2021" decimalPlaces="0" />
+
+							<p:outputLabel value="Faixa Etária:" />
+							<p:inputNumber disabled="true"
+								value="#{detFilmeBacking.faixaEtaria}" placeholder="Ex: 18"
+								size="10" maxValue="18" decimalPlaces="0" />
+
+							<p:outputLabel value="Gênero:" />
+							<p:selectOneMenu disabled="true" filter="true" size="40">
+								<f:selectItem itemLabel="#{detFilmeBacking.genero}" />
+							</p:selectOneMenu>
+
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+
+							<p:commandButton id="btnSair" value="Sair"
+								action="#{detFilmeBacking.sair}" update="@form"
+								style="width: 100px" />
+
+						</h:panelGrid>
+
+					</p:tab>
+
+				</p:tabView>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,157 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Consulta de Locações</title>
+
+		<h:form id="formDevolucao">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+			<div align="center">
+				<p:tabView>
+
+					<p:tab id="tabDevolucao" title="Consulta de Locações">
+
+						<p:panel id="pnConsulta">
+
+							<div align="center">
+								<p:panelGrid columns="2" styleClass="ui-noborder"
+									style="border:none">
+
+									<p:panelGrid columns="2" styleClass="ui-noborder"
+										style="border:none">
+
+										<p:outputLabel value="Locações:" />
+										<p:selectOneMenu filter="true"
+											value="#{consultaBacking.locacao}" size="40">
+											<f:selectItem itemValue="" itemLabel="- Selecione Locação -" />
+											<f:selectItems value="#{consultaBacking.listaLocacoes}"
+												var="locacao"
+												itemLabel="#{locacao.clienteIdCliente.nome} - Cód: #{locacao.idLocacao}"
+												itemValue="#{locacao.idLocacao}" />
+											<p:ajax event="change" update="@form" />
+										</p:selectOneMenu>
+									</p:panelGrid>
+
+									<p:commandButton class="botao" id="btnSelecionar"
+										value="Carregar Locação"
+										action="#{consultaBacking.carregarLocacao}" update="@form" />
+
+								</p:panelGrid>
+
+							</div>
+							<br />
+
+							<div align="center">
+
+								<p:panelGrid columns="4" styleClass="ui-noborder"
+									style="border:none; width:30%">
+
+									<p:outputLabel value="Cliente:" />
+									<p:inputText disabled="true"
+										value="#{consultaBacking.nomeCliente}" />
+
+									<p:outputLabel value="Funcionário:" />
+									<p:inputText disabled="true"
+										value="#{consultaBacking.nomeFuncionario}" />
+
+									<p:outputLabel value="Id Locação:" />
+									<p:inputText disabled="true"
+										value="#{consultaBacking.idLocacao}" />
+
+									<p:outputLabel value="Data Locação:" />
+									<p:inputText disabled="true"
+										value="#{consultaBacking.dataLocacao}" />
+
+									<p:outputLabel value="Data Devolução:" />
+									<p:inputText disabled="true"
+										value="#{consultaBacking.dataDevolucaoLocacao}" />
+
+									<p:outputLabel value="Devolvido:" />
+									<p:inputText disabled="true"
+										value="#{consultaBacking.devolvido}" />
+
+									<p:outputLabel value="Forma de Pagamento:" />
+									<p:inputText disabled="true"
+										value="#{consultaBacking.formaPagamento}" />
+
+									<p:outputLabel value="Valor Total:" />
+									<p:inputText disabled="true"
+										value="#{consultaBacking.valorTotal}" />
+
+								</p:panelGrid>
+							</div>
+							<br />
+
+							<div align="center">
+
+								<p:panelGrid columns="1">
+
+									<h2 align="center">Filmes Alugados pelo Cliente</h2>
+
+									<p:dataTable id="tabelaFilmes" var="filme"
+										value="#{consultaBacking.listaFilmes}" paginator="true"
+										rows="5" lazy="true" emptyMessage="Nenhum registro encontrado"
+										rowKey="" selectionMode="single">
+
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="Código do Filme" />
+											</f:facet>
+											<h:outputText value="#{filme.idFilme}" />
+										</p:column>
+
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="Nome" />
+											</f:facet>
+											<h:outputText value="#{filme.nome}" />
+
+										</p:column>
+
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="Gênero" />
+											</f:facet>
+											<h:outputText value="#{filme.genero}" />
+										</p:column>
+
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="Valor" />
+											</f:facet>
+											<h:outputText value="#{filme.valorFormatado}" />
+										</p:column>
+
+									</p:dataTable>
+
+								</p:panelGrid>
+							</div>
+							<br />
+							<br />
+
+							<div align="center">
+
+								<p:commandButton id="btnCancelar" value="Cancelar"
+									action="#{consultaBacking.cancelar}" update="@form"
+									style="margin-left:50px;  width:150px" />
+
+								<p:commandButton id="btnSair" value="Sair"
+									action="#{consultaBacking.sair}" update="@form"
+									style="margin-left:50px; width:150px" />
+
+							</div>
+						</p:panel>
+
+					</p:tab>
+
+				</p:tabView>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

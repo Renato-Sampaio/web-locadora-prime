@@ -1,0 +1,175 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Locação</title>
+
+		<h:form id="formLocacao" styleClass="ui-noborder">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+			<div align="center">
+				<p:tabView>
+
+					<p:tab id="tabLocacao" title="Locação">
+
+						<p:panel id="pnLocacao">
+
+							<p:panelGrid columns="2" styleClass="ui-noborder"
+								style="width:100%; border:none">
+
+								<p:panelGrid columns="2" style="border: none">
+
+									<p:outputLabel value="Cliente:" />
+									<p:selectOneMenu value="#{locacaoBacking.clienteCombo}"
+										size="40" filter="true">
+										<f:selectItem itemLabel="-Selecione Cliente-" />
+										<f:selectItems value="#{locacaoBacking.listaClientes}"
+											var="cliente" itemLabel="#{cliente.nome}"
+											itemValue="#{cliente.idCliente}" />
+										<p:ajax event="change" update="@form"
+											listener="#{locacaoBacking.desbloqueioFilmes}" />
+									</p:selectOneMenu>
+								</p:panelGrid>
+
+
+								<p:panelGrid columns="2" style="float:right; border:none">
+
+									<li><a><i class="icon-user2"></i> <span><p:outputLabel
+													value="#{loginBacking.funcionarioLogado.nome}" /> </span></a></li>
+
+								</p:panelGrid>
+
+
+							</p:panelGrid>
+							<br />
+
+							<p:panelGrid columns="3" styleClass="ui-noborder"
+								style="width:45%; border:none">
+
+								<p:outputLabel value="Filme:" />
+								<p:selectOneMenu value="#{locacaoBacking.filme}" size="40"
+									filter="true">
+									<f:selectItem itemLabel="-Selecione Filme-" />
+									<f:selectItems value="#{locacaoBacking.listaFilmes}"
+										var="filme" itemLabel="#{filme.nome}"
+										itemValue="#{filme.idFilme}" />
+									<p:ajax event="change" />
+								</p:selectOneMenu>
+
+								<p:commandButton class="botao" id="btnAdicionar"
+									value="Adicionar" action="#{locacaoBacking.adicionarFilme}"
+									update="@form" disabled="#{locacaoBacking.bloqueio}" />
+
+							</p:panelGrid>
+							<br />
+							<br />
+
+							<p:panelGrid columns="1" styleClass="ui-noborder"
+								style="border:none">
+
+								<p:dataTable id="tabelaFilmes" var="filme"
+									value="#{locacaoBacking.listaFilmesLocacao}" paginator="true"
+									rows="5" lazy="true" emptyMessage="Nenhum registro encontrado"
+									rowKey="#{filme.idFilme}" selectionMode="single"
+									selection="#{locacaoBacking.filmeSelecionado}">>
+
+								<p:column>
+										<f:facet name="header">
+											<h:outputText value="Código" />
+										</f:facet>
+										<h:outputText value="#{filme.idFilme}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Nome" />
+										</f:facet>
+										<h:outputText value="#{filme.nome}" />
+
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Promoção" />
+										</f:facet>
+										<h:outputText value="#{filme.promocao}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Valor" />
+										</f:facet>
+										<h:outputText value="#{filme.valorFormatado}" />
+									</p:column>
+
+								</p:dataTable>
+
+								<p:contextMenu for="tabelaFilmes">
+									<p:menuitem value="Excluir" action="#{locacaoBacking.excluir}"
+										update="@form" />
+								</p:contextMenu>
+
+							</p:panelGrid>
+							<br />
+							<br />
+
+							<p:panelGrid columns="2" styleClass="ui-noborder"
+								style="width:50%; border:none">
+
+								<p:outputLabel value="Forma de Pagamento:" />
+								<p:selectOneMenu value="#{locacaoBacking.formaPagamentoCombo}"
+									size="40" filter="true">
+									<f:selectItem itemLabel="-Selecione Pagamento" />
+									<f:selectItems value="#{locacaoBacking.listaFormaPagamento}"
+										var="pagamento" itemLabel="#{pagamento.descricao}"
+										itemValue="#{pagamento.idFormaPagamento}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Data Locação:" />
+								<p:inputText disabled="true"
+									value="#{locacaoBacking.dataLocacao}" />
+
+								<p:outputLabel value="Data Devolução:" />
+								<p:calendar id="button" value="#{locacaoBacking.dataDevolucao}" mindate="#{locacaoBacking.minDate}" maxdate="#{locacaoBacking.maxDate}"
+									showOn="button" pattern="dd/MM/yyyy"
+									placeholder="Ex: 20/05/2021" />
+									
+									
+
+								<p:outputLabel value="Valor Total:" />
+								<p:inputText disabled="true" value="#{locacaoBacking.valor}" />
+
+							</p:panelGrid>
+							<br />
+							<br />
+
+							<div align="center">
+								<p:commandButton id="btnSalvar" value="Salvar"
+									action="#{locacaoBacking.salvar}"
+									disabled="#{locacaoBacking.bloqueio}" update="@form"
+									style=" width:150px" />
+
+								<p:commandButton id="btnCancelar" value="Cancelar"
+									action="#{locacaoBacking.cancelar}"
+									disabled="#{locacaoBacking.bloqueio}" update="@form"
+									style="margin-left:50px; width:150px" />
+
+								<p:commandButton id="btnSair" value="Sair"
+									action="#{locacaoBacking.sair}"
+									disabled="#{!locacaoBacking.bloqueio}" update="@form"
+									style="margin-left:50px; width:150px" />
+							</div>
+						</p:panel>
+
+					</p:tab>
+
+				</p:tabView>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

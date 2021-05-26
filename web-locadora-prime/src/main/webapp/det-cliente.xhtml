@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+
+		<title>Detalhe do Cliente</title>
+
+		<h:form id="formDetCliente">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<div align="center">
+
+				<p:tabView id="tabCliente">
+
+					<p:tab id="cadDados" title="Dados do Cliente">
+
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Nome:" />
+							<p:inputText disabled="true" value="#{detClienteBacking.nome}"
+								size="60" />
+
+							<p:outputLabel value="CPF:" />
+							<p:inputMask disabled="true" value="#{detClienteBacking.cpf}"
+								size="20" mask="999.999.999-99" />
+
+							<p:outputLabel value="RG:" />
+							<p:inputMask disabled="true" value="#{detClienteBacking.rg}"
+								size="20" mask="99.999.999-*" />
+
+							<p:outputLabel value="Data Nasc:" />
+							<p:calendar disabled="true" id="button"
+								value="#{detClienteBacking.dataNascimento}" showOn="button"
+								pattern="dd/MM/yyyy" />
+
+							<p:outputLabel value="Idade:" />
+							<p:inputNumber disabled="true" value="#{detClienteBacking.idade}"
+								size="5" minValue="1" maxValue="150" decimalPlaces="0" />
+
+							<h:outputText value="Sexo:" />
+							<p:selectOneRadio disabled="true"
+								value="#{detClienteBacking.sexo}">
+								<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+								<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+
+					</p:tab>
+
+					<p:tab id="cadEndereco" title="Dados de Endereço">
+
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Tipo:" />
+							<p:selectOneMenu disabled="true" size="30">
+								<f:selectItem itemLabel="#{detClienteBacking.tipoLogradouro}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Logradouro:" />
+							<p:inputText disabled="true"
+								value="#{detClienteBacking.nomeEndereco}" size="40" />
+
+							<p:outputLabel value="Numero:" />
+							<p:inputNumber disabled="true"
+								value="#{detClienteBacking.numero}" size="10" maxValue="99999"
+								decimalPlaces="0" />
+
+							<p:outputLabel value="Complemento:" />
+							<p:inputText disabled="true"
+								value="#{detClienteBacking.complemento}" size="20" />
+
+							<p:outputLabel value="Bairro:" />
+							<p:inputText disabled="true" value="#{detClienteBacking.bairro}"
+								size="40" />
+
+							<p:outputLabel value="Estado:" />
+							<p:selectOneMenu id="cbEstado" disabled="true" size="40">
+								<f:selectItem itemLabel="#{detClienteBacking.estado}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Cidade:" />
+							<p:selectOneMenu id="cbCidade" disabled="true" size="40">
+								<f:selectItem itemLabel="#{detClienteBacking.cidade}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="CEP:" />
+							<p:inputMask disabled="true" value="#{detClienteBacking.cep}"
+								size="15" mask="99999-999" />
+						</h:panelGrid>
+
+					</p:tab>
+
+					<p:tab id="cadContato" title="Dados de Contato">
+
+						<h:panelGrid columns="4">
+							<p:outputLabel value="Telefone:" />
+							<p:inputMask disabled="true"
+								value="#{detClienteBacking.telefone}" size="20"
+								mask="(99) 9999-9999" />
+
+							<p:outputLabel value="Celular:" />
+							<p:inputMask disabled="true" value="#{detClienteBacking.celular}"
+								size="20" mask="(99) 99999-9999" />
+						</h:panelGrid>
+
+						<h:panelGrid columns="3">
+							<p:outputLabel value="E-mail:" />
+							<p:spacer height="10" />
+							<p:inputText disabled="true" value="#{detClienteBacking.email}"
+								size="53" />
+						</h:panelGrid>
+
+					</p:tab>
+
+				</p:tabView>
+
+				<h:panelGrid columns="1">
+
+					<p:commandButton id="btnSair" value="Sair"
+						action="#{detClienteBacking.sair}" update="@form"
+						style="width: 100px" />
+
+				</h:panelGrid>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<p:panelMenu style="width:250px">
+			<p:submenu label="CADASTRO" rendered="#{loginBacking.adm}">
+				<p:menuitem value="Cadastrar Filme" url="cad-filme.xhtml" />
+				<p:menuitem value="Cadastrar Cliente" url="cad-cliente.xhtml" />
+				<p:menuitem value="Cadastrar Funcionário"
+					url="cad-funcionario.xhtml" />
+			</p:submenu>
+			<p:submenu label=" CONSULTA/RELATÓRIO "
+				rendered="#{loginBacking.adm}">
+				<p:menuitem value="Consultar Filme" url="list-filme.xhtml" />
+				<p:menuitem value="Consultar Cliente" url="list-cliente.xhtml" />
+				<p:menuitem value="Consultar Funcionário"
+					url="list-funcionario.xhtml" />
+				<p:menuitem value="Consultar Locação" url="list-locacao.xhtml" />
+			</p:submenu>
+			<p:submenu label="LOCAÇÃO" rendered="#{loginBacking.user}">
+				<p:menuitem value="Efetuar Locação" url="cad-locacao.xhtml" />
+				<p:menuitem value="Efetuar Devolução" url="cad-devolucao.xhtml" />
+			</p:submenu>
+			
+				<p:submenu label=" CONSULTA/RELATÓRIO "
+				rendered="#{!loginBacking.adm}">
+				<p:menuitem value="Consultar Filme" url="list-filme.xhtml" />
+				<p:menuitem value="Consultar Cliente" url="list-cliente.xhtml" />
+				<p:menuitem value="Consultar Locação" url="list-locacao.xhtml" />
+				</p:submenu>
+				<p:submenu label="CADASTRO" rendered="#{!loginBacking.adm}">
+				<p:menuitem value="Cadastrar Cliente" url="cad-cliente.xhtml" />
+				
+			</p:submenu>
+			
+		</p:panelMenu>
+	</h:form>
+</ui:composition>

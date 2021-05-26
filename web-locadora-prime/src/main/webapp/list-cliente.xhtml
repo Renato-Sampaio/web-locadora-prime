@@ -1,0 +1,152 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Consulta de Clientes</title>
+
+		<h:form id="listCliente">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<div align="center">
+
+				<p:tabView>
+
+					<p:tab id="ltCliente" title="Consulta de Clientes">
+
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Filtrar por Nome:" />
+							<p:inputText id="inptPesquisar"
+								value="#{listClienteBacking.nomePesquisar}" size="80">
+								<p:ajax event="keyup" update="@form"
+									listener="#{listClienteBacking.pesquisar}" />
+							</p:inputText>
+						</h:panelGrid>
+
+						<p:separator />
+
+						<h:panelGrid columns="1">
+
+							<p:dataTable id="tabelaClientes"
+								value="#{listClienteBacking.listaClientes}" var="cliente"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+															  {PreviousPageLink} {PageLinks}
+															  {NextPageLink} {LastPageLink}
+															  {Exporters}"
+								paginator="true" rows="5" lazy="true" widgetVar="dtWidgetVar"
+								emptyMessage="Nenhum registro encontrado!"
+								rowKey="#{cliente.idCliente}" selectionMode="single"
+								selection="#{listClienteBacking.clienteSelecionado}">
+
+								<f:facet name="header">
+            							Clientes Cadastrados
+       								</f:facet>
+
+								<f:facet name="{Exporters}">
+
+									<div style="float: right; padding-top: 5px;">
+
+										<h:commandLink>
+											<p:graphicImage name="/demo/images/xlsx.png" width="24" />
+											<p:dataExporter type="xlsxstream" target="tabelaClientes"
+												fileName="listaClientes" />
+										</h:commandLink>
+
+										<h:commandLink id="pdf">
+											<p:graphicImage name="/demo/images/pdf.png" />
+											<p:dataExporter type="pdf" target="tabelaClientes"
+												fileName="listaClientes" />
+										</h:commandLink>
+
+									</div>
+
+								</f:facet>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Nome" />
+									</f:facet>
+									<h:outputText value="#{cliente.nome}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Data de Nascimento" />
+									</f:facet>
+									<div align="center">
+										<h:outputText value="#{cliente.dataNascimento}" />
+									</div>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Sexo" />
+									</f:facet>
+									<div align="center">
+										<h:outputText value="#{cliente.sexo}" />
+									</div>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Celular" />
+									</f:facet>
+									<div align="center">
+										<h:outputText value="#{cliente.contatoIdContato.celular}" />
+									</div>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="E-mail" />
+									</f:facet>
+									<h:outputText value="#{cliente.contatoIdContato.email}" />
+								</p:column>
+
+							</p:dataTable>
+
+							<p:contextMenu for="tabelaClientes">
+								<p:menuitem value="Alterar"
+									action="#{listClienteBacking.alterar}" update="@form" />
+								<p:menuitem value="Excluir" rendered="#{loginBacking.dev}"
+									action="#{listClienteBacking.excluir}" update="@form">
+									<p:confirm header="Excluir Funcionario"
+										message="Confirma exclusão?" />
+								</p:menuitem>
+								<p:menuitem value="Detalhar"
+									action="#{listClienteBacking.detalhar}" update="@form" />
+							</p:contextMenu>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" />
+							</p:confirmDialog>
+
+						</h:panelGrid>
+
+						<p:spacer width="20" />
+
+						<h:panelGrid columns="1">
+							<p:commandButton id="btnSair" value="Sair"
+								action="#{listClienteBacking.sair}"
+								onclick="PF('dtWidgetVar').unselectAllRows()" update="@form"
+								style="width: 200px" />
+						</h:panelGrid>
+
+					</p:tab>
+
+				</p:tabView>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head style="background: red">
+	<title>Sistema - Locaradora</title>
+	
+</h:head>
+
+<h:body style="background: red; margin: 0 0 0 0;">
+
+	<h:form id="formularioLogin" style="margin-top:150px">
+
+		<p:growl id="growl" showDetail="true" sticky="true" />
+
+		<div align="center" style="background: white">
+
+
+
+			<p:separator />
+
+			<h:graphicImage name="images/logo01.gif" library="adamantium-layout"
+				style="height:250px;   width:500px ; margin-top:5px;" />
+
+			<h:panelGrid columns="2" cellpadding="10" styleClass="ui-noborder" id="pn2"
+				style="border:none" >
+
+				<p:outputLabel value="Login:" />
+				<p:inputText value="#{loginBacking.login}" required="true"
+					requiredMessage="Login Obrigatório!">
+					<p:ajax event="focus" />
+				</p:inputText>
+
+				<p:outputLabel value="Senha:" />
+				<p:password id="feedback" value="#{loginBacking.senha}"
+					feedback="true" required="true"
+					requiredMessage="Senha Obrigatória !">
+					<p:ajax event="focus" />
+				</p:password>
+
+			</h:panelGrid>
+			<p:panelGrid id="pnLogin">
+				<p:commandButton value="Login" id="btnSalvar" style="width:300px" 
+					action="#{loginBacking.efetuarLogin}" update="@form" />
+			</p:panelGrid>
+			<p:blockUI block="pnLogin" trigger="btnSalvar"  />
+			<p:blockUI block="pn2" trigger="btnSalvar" />
+			<p:separator />
+		</div>
+	</h:form>
+</h:body>
+
+</html>

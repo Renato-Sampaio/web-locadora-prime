@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+
+		<title>Detalhe da Locação</title>
+
+		<h:form id="formCadLocacao">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<div align="center">
+
+				<p:tabView>
+
+					<p:tab id="cadLocacao" title="Detalhe da Locação">
+
+						<p:panel id="pnLocacao">
+
+							<h:panelGrid columns="2">
+
+								<p:outputLabel value="Cliente:" />
+								<p:inputText disabled="true"
+									value="#{detLocacaoBacking.nomeCliente}" size="60" />
+
+								<p:outputLabel value="Data Locação:" />
+								<p:inputText disabled="true"
+									value="#{detLocacaoBacking.dataLocacao}" size="25" />
+
+								<p:outputLabel value="Data Devolução:" />
+								<p:inputText disabled="true"
+									value="#{detLocacaoBacking.dataDevolucao}" size="25" />
+
+								<p:outputLabel value="Valor:" />
+								<p:inputText disabled="true"
+									value="#{detLocacaoBacking.valor}" size="25" />
+
+								<p:outputLabel value="Devolvido:" />
+								<p:selectOneRadio
+									value="#{detLocacaoBacking.devolvido}" disabled="true">
+									<f:selectItem itemLabel="Sim" itemValue="Sim" />
+									<f:selectItem itemLabel="Não" itemValue="Não" />
+								</p:selectOneRadio>
+
+							</h:panelGrid>
+
+							<p:spacer width="20" />
+
+							<h:panelGrid columns="1">
+
+								<p:dataTable id="tabelaFilmes"
+									value="#{detLocacaoBacking.listaFilmes}" var="filme"
+									emptyMessage="">
+
+									<f:facet name="header">
+            							Filmes Alugados
+       								</f:facet>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Nome" />
+										</f:facet>
+										<h:outputText value="#{filme.nome}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Gênero" />
+										</f:facet>
+										<h:outputText value="#{filme.genero}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Valor" />
+										</f:facet>
+										<h:outputText value="#{filme.valorFormatado}" />
+									</p:column>
+
+								</p:dataTable>
+
+							</h:panelGrid>
+
+							<p:spacer width="20" />
+
+							<h:panelGrid columns="2">
+
+								<p:commandButton id="btnSair" value="Sair"
+									action="#{detLocacaoBacking.sair}" update="@form"
+									style="width: 100px" />
+							</h:panelGrid>
+
+						</p:panel>
+
+					</p:tab>
+
+				</p:tabView>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

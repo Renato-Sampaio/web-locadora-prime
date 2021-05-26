@@ -1,0 +1,162 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Consulta de Filmes</title>
+
+		<h:form id="listFilme">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<div align="center">
+
+				<p:tabView>
+
+					<p:tab id="ltFilme" title="Consulta de Filmes">
+
+						<h:panelGrid columns="2" cellspacing="10px">
+							<p:outputLabel value="Tipo de Pesquisa:"
+								style="font-size: 18px; font: bold" />
+							<p:selectOneRadio value="#{listFilmeBacking.tipoPesquisa}">
+								<f:selectItem itemLabel="Filmes Disponíveis" itemValue="1" />
+								<f:selectItem itemLabel="Filmes Alugados" itemValue="2" />
+								<f:selectItem itemLabel="Todos os Filmes" itemValue="3" />
+								<p:ajax event="click" update="@form"
+									listener="#{listFilmeBacking.carregarPesquisa}" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Filtrar por Nome:" />
+							<p:inputText value="#{listFilmeBacking.nomePesquisar}" size="80">
+								<p:ajax event="keyup" update="@form"
+									listener="#{listFilmeBacking.pesquisar}" />
+							</p:inputText>
+						</h:panelGrid>
+
+						<p:separator />
+
+						<h:panelGrid columns="1">
+
+							<p:dataTable id="tabelaFilmes"
+								value="#{listFilmeBacking.listaFilmes}" var="filme"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+															  {PreviousPageLink} {PageLinks}
+															  {NextPageLink} {LastPageLink}
+															  {Exporters}"
+								paginator="true" rows="5" lazy="true" widgetVar="dtWidgetVar"
+								emptyMessage="Nenhum registro encontrado!"
+								rowKey="#{filme.idFilme}" selectionMode="single"
+								selection="#{listFilmeBacking.filmeSelecionado}">
+
+								<f:facet name="header">
+            							Filmes Cadastrados
+       								</f:facet>
+
+								<f:facet name="{Exporters}">
+
+									<div style="float: right; padding-top: 5px;">
+
+										<h:commandLink>
+											<p:graphicImage name="/demo/images/xlsx.png" width="24" />
+											<p:dataExporter type="xlsxstream" target="tabelaFilmes"
+												fileName="listaFilmes" />
+										</h:commandLink>
+
+										<h:commandLink>
+											<p:graphicImage name="/demo/images/pdf.png" />
+											<p:dataExporter type="pdf" target="tabelaFilmes"
+												fileName="listaFilmes" />
+										</h:commandLink>
+
+									</div>
+
+								</f:facet>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Nome" />
+									</f:facet>
+									<h:outputText value="#{filme.nome}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Valor" />
+									</f:facet>
+									<div align="center">
+										<h:outputText value="#{filme.valorFormatado}" />
+									</div>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Disponível" />
+									</f:facet>
+									<div align="center">
+										<h:outputText value="#{filme.disponivel}" />
+									</div>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Gênero" />
+									</f:facet>
+									<h:outputText value="#{filme.genero}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Promoção" />
+									</f:facet>
+									<div align="center">
+										<h:outputText value="#{filme.promocao}" />
+									</div>
+								</p:column>
+
+							</p:dataTable>
+
+							<p:contextMenu for="tabelaFilmes">
+								<p:menuitem value="Alterar" action="#{listFilmeBacking.alterar}"
+									update="@form" rendered="#{!loginBacking.user}" />
+								<p:menuitem value="Excluir" action="#{listFilmeBacking.excluir}"
+									update="@form" rendered="#{loginBacking.dev}">
+									<p:confirm header="Excluir Filme" message="Confirma exclusão?" />
+								</p:menuitem>
+								<p:menuitem value="Detalhar"
+									action="#{listFilmeBacking.detalhar}" update="@form" />
+							</p:contextMenu>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" />
+							</p:confirmDialog>
+
+						</h:panelGrid>
+
+						<p:spacer width="20" />
+
+						<h:panelGrid columns="1">
+							<p:commandButton id="btnSair" value="Sair"
+								action="#{listFilmeBacking.sair}"
+								onclick="PF('dtWidgetVar').unselectAllRows()" update="@form"
+								style="width: 200px" />
+						</h:panelGrid>
+
+					</p:tab>
+
+				</p:tabView>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

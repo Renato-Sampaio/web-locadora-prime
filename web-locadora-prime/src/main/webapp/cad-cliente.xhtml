@@ -1,0 +1,158 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Cadastro de Cliente</title>
+
+		<h:form id="formCadcliente">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<div align="center">
+				<p:tabView>
+
+					<p:tab id="DadosPessoais" title="Dados Pessoais">
+						<p:panel id="pnDadosPessoais">
+
+							<p:panelGrid columns="2" styleClass="ui-noborder"
+								style="border:none">
+
+								<p:outputLabel value="Nome:" />
+								<p:inputText value="#{clienteBacking.nome}" size="45"
+									maxlength="45" placeholder="Ex: José Luiz da Silva" />
+
+								<p:outputLabel value="Cpf:" />
+								<p:inputMask id="cpf" value="#{clienteBacking.cpf}"
+									placeholder="Ex: 123.456.789-10" mask="999.999.999-99"
+									decimalPlaces="0" />
+
+								<p:outputLabel value="RG:" />
+								<p:inputMask value="#{clienteBacking.rg}"
+									placeholder="Ex: 50.743.888-4" mask="99.999-999-*" />
+
+								<p:outputLabel value="Data de Nascimento:" />
+								<p:calendar id="button" value="#{clienteBacking.dataNascimento}"
+									showOn="button" pattern="dd/MM/yyyy"
+									placeholder="Ex: 01/01/2000" />
+
+								<p:outputLabel value="Idade:" />
+								<p:inputNumber value="#{clienteBacking.idade}"
+									placeholder="Ex: 18" size="5" maxValue="100" decimalPlaces="0" />
+
+								<p:outputLabel value="Sexo:" />
+								<p:selectOneRadio id="sexo" value="#{clienteBacking.sexo}">
+									<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+									<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+								</p:selectOneRadio>
+
+
+							</p:panelGrid>
+						</p:panel>
+					</p:tab>
+					<p:tab id="cadEndereco" title="Endereço">
+						<p:panel id="pnEndereco">
+
+							<p:panelGrid columns="2" styleClass="ui-noborder"
+								style="border:none">
+
+								<p:outputLabel value="Logradouro:" />
+								<p:selectOneMenu value="#{clienteBacking.tipoLogradouro}"
+									size="40" filter="true">
+									<f:selectItem itemValue="" itemLabel="- Selecione Logradouro -" />
+									<f:selectItems value="#{clienteBacking.listaLogradouro}" />
+
+								</p:selectOneMenu>
+								<p:outputLabel value="Endereço:" />
+								<p:inputText value="#{clienteBacking.enderecoNome}" size="45"
+									maxlength="45" placeholder="Ex: Avenida Paulista" />
+
+								<p:outputLabel value="Complemento:" />
+								<p:inputText value="#{clienteBacking.complemento}" size="45"
+									maxlength="45" placeholder="Ex: Proximo ao Prédio FIESP" />
+
+								<p:outputLabel value="Bairro:" />
+								<p:inputText value="#{clienteBacking.bairro}" size="45"
+									maxlength="45" placeholder="Ex: Paraíso" />
+
+								<p:outputLabel value="CEP:" />
+								<p:inputMask id="cep" value="#{clienteBacking.cep}"
+									placeholder="Ex: 12345-678" mask="99999-999" decimalPlaces="0" />
+
+
+								<p:outputLabel value="Numero:" />
+								<p:inputNumber value="#{clienteBacking.numero}"
+									placeholder="Ex: 18" decimalPlaces="0" />
+
+								<p:outputLabel value="Estado:" />
+								<p:selectOneMenu value="#{clienteBacking.estado}" size="40"
+									filter="true">
+									<f:selectItem itemValue="" itemLabel="- Selecione Estado -" />
+									<f:selectItems value="#{clienteBacking.listaEstados}" var="cid"
+										itemLabel="#{cid.nome}" itemValue="#{cid.idEstado}" />
+									<p:ajax event="change" update="cidadeCombo"
+										listener="#{clienteBacking.carregarCidades}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Cidade:" />
+								<p:selectOneMenu value="#{clienteBacking.cidade}" size="40"
+									filter="true" id="cidadeCombo">
+									<f:selectItem itemValue="" itemLabel="- Selecione Cidade -" />
+									<f:selectItems value="#{clienteBacking.listaCidades}"
+										var="cida" itemLabel="#{cida.nome}"
+										itemValue="#{cida.idCidade}" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="cadContato" title="Contato">
+						<p:panel id="pnContato">
+							<p:panelGrid columns="2" styleClass="ui-noborder"
+								style="border:none">
+
+								<p:outputLabel value="Telefone:" />
+								<p:inputMask value="#{clienteBacking.telefone}" size="20"
+									placeholder="Ex: (11) 1234-1234" mask="(99) 9999-9999" />
+
+								<p:outputLabel value="Celular:" />
+								<p:inputMask value="#{clienteBacking.celular}" size="20"
+									placeholder="Ex: (11) 91234-1234" mask="(99) 99999-9999" />
+
+
+								<p:outputLabel value="E-mail:" />
+								<p:inputText value="#{clienteBacking.email}" size="45"
+									maxlength="45" placeholder="Ex: exemplo@dominioemail.com" />
+							</p:panelGrid>
+							<br />
+							<br />
+							<p:panelGrid columns="3" styleClass="ui-noborder"
+								style="border:none">
+
+								<p:commandButton id="btnSalvar" value="Salvar"
+									style="width:150px" action="#{clienteBacking.cadastrar}"
+									update="@form" />
+
+								<p:commandButton id="btnCancelar" value="Cancelar"
+									style="width:150px" action="#{clienteBacking.cancelar}"
+									update="@form" />
+
+								<p:commandButton id="btnSair" value="Sair" style="width:150px"
+									action="#{clienteBacking.sair}" update="@form" />
+
+							</p:panelGrid>
+						</p:panel>
+
+						<p:blockUI block="pnDadosPessoais" trigger="btnSalvar" />
+						<p:blockUI block="pnEndereco" trigger="btnSalvar" />
+						<p:blockUI block="pnContato" trigger="btnSalvar" />
+
+
+					</p:tab>
+				</p:tabView>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
